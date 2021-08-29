@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"crypto/elliptic"
 	"strings"
 
 	"github.com/hlandau/acmetool/fdb"
@@ -78,18 +77,5 @@ func clampECDSACurve(curveName string) string {
 		return curveName
 	default:
 		return defaultCurve
-	}
-}
-
-func getECDSACurve(curveName string) elliptic.Curve {
-	switch clampECDSACurve(curveName) {
-	case "nistp256":
-		return elliptic.P256()
-	case "nistp384":
-		return elliptic.P384()
-	case "nistp521":
-		return elliptic.P521()
-	default:
-		return nil
 	}
 }

@@ -19,7 +19,6 @@ import (
 	"gopkg.in/hlandau/acmeapi.v2"
 	"gopkg.in/hlandau/acmeapi.v2/acmeendpoints"
 	"gopkg.in/hlandau/svcutils.v1/exepath"
-	"gopkg.in/hlandau/svcutils.v1/passwd"
 )
 
 func cmdQuickstart() {
@@ -473,19 +472,6 @@ Do you want to install the combined file generation hook? If in doubt, say yes.`
 	}
 
 	return !r.Cancelled
-}
-
-var usernamesToTry = []string{"daemon", "nobody"}
-
-func determineAppropriateUsername() (string, error) {
-	for _, u := range usernamesToTry {
-		_, err := passwd.ParseUID(u)
-		if err == nil {
-			return u, nil
-		}
-	}
-
-	return "", fmt.Errorf("cannot find appropriate username")
 }
 
 func promptRSAKeySize() int {

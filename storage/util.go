@@ -12,7 +12,6 @@ import (
 	"io"
 	"math/big"
 	"net/url"
-	"path/filepath"
 	"regexp"
 	"strings"
 
@@ -97,31 +96,6 @@ func lowerChar(c byte) byte {
 		return c - 'A' + 'a'
 	}
 	return c
-}
-
-// 'root' must be an absolute path.
-func pathIsWithin(subject, root string) (bool, error) {
-	os := subject
-	subject, err := filepath.EvalSymlinks(subject)
-	if err != nil {
-		log.Errore(err, "eval symlinks: ", os, " ", root)
-		return false, err
-	}
-
-	subject, err = filepath.Abs(subject)
-	if err != nil {
-		return false, err
-	}
-
-	return strings.HasPrefix(subject, ensureSeparator(root)), nil
-}
-
-func ensureSeparator(p string) string {
-	if !strings.HasSuffix(p, string(filepath.Separator)) {
-		return p + string(filepath.Separator)
-	}
-
-	return p
 }
 
 func determineKeyIDFromCert(c *x509.Certificate) string {
@@ -228,33 +202,6 @@ var reCertID = regexp.MustCompile(`^[a-z0-9]{52}$`)
 // (or key) ID.
 func IsWellFormattedCertificateOrKeyID(certificateID string) bool {
 	return reCertID.MatchString(certificateID)
-}
-
-func targetGt(a *Target, b *Target) bool {
-	if a == nil && b == nil {
-		return false // equal
-	} else if b == nil {
-		return true // a > nil
-	} else if a == nil {
-		return false // nil < a
-	}
-
-	if a.Priority > b.Priority {
-		return true
-	} else if a.Priority < b.Priority {
-		return false
-	}
-
-	return len(a.Satisfy.Names) > len(b.Satisfy.Names)
-}
-
-func containsName(names []string, name string) bool {
-	for _, n := range names {
-		if n == name {
-			return true
-		}
-	}
-	return false
 }
 
 func normalizeNames(names []string) error {

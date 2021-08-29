@@ -55,8 +55,6 @@ var (
 	cullCmd          = kingpin.Command("cull", "Delete expired, unused certificates")
 	cullSimulateFlag = cullCmd.Flag("simulate", "Show which certificates would be deleted without deleting any").Short('n').Bool()
 
-	statusCmd = kingpin.Command("status", "Show active configuration")
-
 	wantCmd       = kingpin.Command("want", "Add a target with one or more hostnames")
 	wantReconcile = wantCmd.Flag("reconcile", "Specify --no-reconcile to skip reconcile after adding target").Default("1").Bool()
 	wantArg       = wantCmd.Arg("hostname", "hostnames for which a certificate should be obtained").Required().Strings()
@@ -89,9 +87,6 @@ var (
 	importKeyCmd = kingpin.Command("import-key", "Import a certificate private key")
 	importKeyArg = importKeyCmd.Arg("private-key-file", "Path to PEM-encoded private key").Required().ExistingFile()
 
-	importLECmd = kingpin.Command("import-le", "Import a Let's Encrypt client state directory")
-	importLEArg = importLECmd.Arg("le-state-path", "Path to Let's Encrypt state directory").Default("/etc/letsencrypt").ExistingDir()
-
 	// Arguments we should probably support for revocation:
 	//   A certificate ID
 	//   A key ID
@@ -102,10 +97,6 @@ var (
 	//   A certificate URL - TODO
 	revokeCmd = kingpin.Command("revoke", "Revoke a certificate")
 	revokeArg = revokeCmd.Arg("certificate-id-or-path", "Certificate ID to revoke").String()
-
-	accountThumbprintCmd = kingpin.Command("account-thumbprint", "Prints account thumbprints")
-
-	accountURLCmd = kingpin.Command("account-url", "Show account URL")
 )
 
 const reconcileHelp = `Reconcile ACME state, idempotently requesting and renewing certificates to satisfy configured targets.

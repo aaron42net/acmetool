@@ -3,7 +3,6 @@
 package redirector
 
 import (
-	"errors"
 	"fmt"
 	"html"
 	"net"
@@ -229,8 +228,6 @@ const redirBody = `<!DOCTYPE html>
 
 // Like http.Dir, but doesn't allow directory listings.
 type nolsDir string
-
-var errNoListing = errors.New("http: directory listing not allowed")
 
 func (d nolsDir) Open(name string) (http.File, error) {
 	f, err := http.Dir(d).Open(name)
