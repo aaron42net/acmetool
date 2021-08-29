@@ -285,7 +285,7 @@ func isCronjobInstalled() bool {
 			return nil
 		}
 
-		if strings.Index(fi.Name(), "acmetool") >= 0 {
+		if strings.Contains(fi.Name(), "acmetool") {
 			installed = true
 			return errStop
 		}
@@ -301,7 +301,7 @@ func isCronjobInstalled() bool {
 			return nil
 		}
 
-		if bytes.Index(b, []byte("acmetool")) >= 0 {
+		if bytes.Contains(b, []byte("acmetool")) {
 			installed = true
 			return errStop
 		}
@@ -399,7 +399,7 @@ func amendUserCron(cronLine, filterString string) error {
 		return err
 	}
 
-	if bytes.Index(b, []byte("acmetool")) >= 0 {
+	if bytes.Contains(b, []byte("acmetool")) {
 		return nil
 	}
 
@@ -420,7 +420,7 @@ func getUserCron() ([]byte, error) {
 	}
 
 	// crontab -l returns 1 if no crontab is installed, grep stderr to identify this condition
-	if bytes.Index(errBuf.Bytes(), []byte("no crontab for")) >= 0 {
+	if bytes.Contains(errBuf.Bytes(), []byte("no crontab for")) {
 		return nil, nil
 	}
 

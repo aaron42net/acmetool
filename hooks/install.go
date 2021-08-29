@@ -107,5 +107,5 @@ func isManagedFile(filename string) (bool, error) {
 	b := make([]byte, 4096)
 	n, _ := f.Read(b)
 	b = b[0:n]
-	return bytes.Index(b, []byte("#!acmetool-managed!#")) >= 0, nil
+	return bytes.Contains(b, []byte("#!acmetool-managed!#")), nil
 }

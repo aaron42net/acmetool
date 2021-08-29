@@ -45,9 +45,7 @@ func ensureConceivablySatisfiable(t *storage.Target) {
 		log.Warnf("%v can never be satisfied because names to be requested are not a superset of the names to be satisfied; adding names automatically to render target satisfiable", t)
 	}
 
-	for _, n := range excludedNames {
-		t.Request.Names = append(t.Request.Names, n)
-	}
+	t.Request.Names = append(t.Request.Names, excludedNames...)
 
 	if t.Satisfy.Key.Type != "" {
 		t.Request.Key.Type = t.Satisfy.Key.Type
