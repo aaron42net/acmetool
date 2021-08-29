@@ -228,7 +228,7 @@ func resolveUIDGID(p *Permission) (uid, gid int, err error) {
 }
 
 func isHiddenRelPath(rp string) bool {
-	return strings.HasPrefix(rp, ".") || strings.Index(rp, "/.") >= 0
+	return strings.HasPrefix(rp, ".") || strings.Contains(rp, "/.")
 }
 
 // Change all directory permissions to be correct.
