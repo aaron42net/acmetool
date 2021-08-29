@@ -29,7 +29,7 @@ func nextSuffix() string {
 	return strconv.Itoa(int(1e9 + r%1e9))[1:]
 }
 
-func tempSymlink(target string, fromDir string) (tmpName string, err error) {
+func tempSymlink(target, fromDir string) (tmpName string, err error) {
 	nconflict := 0
 	for i := 0; i < 10000; i++ {
 		tmpName = filepath.Join(fromDir, "symlink."+nextSuffix())

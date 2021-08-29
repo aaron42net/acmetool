@@ -26,7 +26,7 @@ func (ts targetSorter) Less(i, j int) bool {
 	return targetGt(ts[j], ts[i])
 }
 
-func targetGt(a *storage.Target, b *storage.Target) bool {
+func targetGt(a, b *storage.Target) bool {
 	if a == nil && b == nil {
 		return false // equal
 	} else if b == nil {

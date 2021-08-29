@@ -101,12 +101,12 @@ func ChallengeHTTPStop(ctx *Context, hostname, targetFileName, token, ka string)
 	return err
 }
 
-func ChallengeTLSSNIStart(ctx *Context, hostname, targetFileName, validationName1, validationName2 string, pem string) (installed bool, err error) {
+func ChallengeTLSSNIStart(ctx *Context, hostname, targetFileName, validationName1, validationName2, pem string) (installed bool, err error) {
 	return runParts(ctx, []byte(pem),
 		"challenge-tls-sni-start", hostname, targetFileName, validationName1, validationName2)
 }
 
-func ChallengeTLSSNIStop(ctx *Context, hostname, targetFileName, validationName1, validationName2 string, pem string) (installed bool, err error) {
+func ChallengeTLSSNIStop(ctx *Context, hostname, targetFileName, validationName1, validationName2, pem string) (installed bool, err error) {
 	return runParts(ctx, []byte(pem),
 		"challenge-tls-sni-stop", hostname, targetFileName, validationName1, validationName2)
 }
