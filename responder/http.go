@@ -119,7 +119,7 @@ func (s *httpResponder) selfTest() error {
 	}
 
 	trans := &http.Transport{
-		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true},
+		TLSClientConfig:   &tls.Config{InsecureSkipVerify: true}, //nolint:gosec // Only for a self-test.
 		DisableKeepAlives: true,
 	}
 

@@ -149,6 +149,8 @@ func (db *DB) Verify() error {
 
 func (db *DB) createDirs() error {
 	for _, p := range db.effectivePermissions {
+		p := p // Avoid memory aliasing.
+
 		if strings.IndexByte(p.Path, '*') >= 0 {
 			continue
 		}
