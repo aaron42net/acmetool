@@ -1,8 +1,9 @@
 package solver
 
 import (
-	"gopkg.in/hlandau/acmeapi.v2"
 	"sort"
+
+	"gopkg.in/hlandau/acmeapi.v2"
 )
 
 // Any challenge having a preference at or below this value will never be used.

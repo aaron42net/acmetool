@@ -4,6 +4,14 @@ import (
 	"bytes"
 	"crypto/rand"
 	"fmt"
+	"io/ioutil"
+	"os"
+	"os/exec"
+	"path/filepath"
+	"reflect"
+	"strconv"
+	"strings"
+
 	"github.com/hlandau/acmetool/hooks"
 	"github.com/hlandau/acmetool/interaction"
 	"github.com/hlandau/acmetool/storage"
@@ -12,13 +20,6 @@ import (
 	"gopkg.in/hlandau/acmeapi.v2/acmeendpoints"
 	"gopkg.in/hlandau/svcutils.v1/exepath"
 	"gopkg.in/hlandau/svcutils.v1/passwd"
-	"io/ioutil"
-	"os"
-	"os/exec"
-	"path/filepath"
-	"reflect"
-	"strconv"
-	"strings"
 )
 
 func cmdQuickstart() {
@@ -60,7 +61,7 @@ func cmdQuickstart() {
 	}
 
 	if len(webroot) != 0 {
-		err = os.MkdirAll(webroot[0], 0755)
+		err = os.MkdirAll(webroot[0], 0o755)
 		log.Fatale(err, "couldn't create webroot path")
 	}
 
@@ -375,7 +376,7 @@ func promptCron() {
 	}
 
 	if runningAsRoot() {
-		f, err := os.OpenFile("/etc/cron.d/acmetool", os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0644)
+		f, err := os.OpenFile("/etc/cron.d/acmetool", os.O_CREATE|os.O_WRONLY|os.O_EXCL, 0o644)
 		if err != nil {
 			log.Errore(err, "failed to install cron job at /etc/cron.d/acmetool (does the file already exist?), wanted to install: ", cronString)
 			return
@@ -467,7 +468,7 @@ Do you want to install the combined file generation hook? If in doubt, say yes.`
 	})
 	if err != nil {
 		// Install by default, since the hook script does nothing unless a service requiring it is
-		// installed. Can still be overriden by --expert or response file.
+		// installed. Can still be overridden by --expert or response file.
 		return true
 	}
 
@@ -642,7 +643,7 @@ Do you want to continue? To enter a different webroot path, select No.`,
 		}
 	}
 
-	err = os.MkdirAll(path, 0755)
+	err = os.MkdirAll(path, 0o755)
 	log.Fatale(err, "could not create directory: ", path)
 
 	return path
@@ -689,19 +690,24 @@ HOOK: Programmatic challenge provisioning. Advanced users only. Please see docum
 				Title: "WEBROOT - Place challenges in a directory",
 				Value: "webroot",
 			},
-			{Title: "PROXY - I'll proxy challenge requests to an HTTP server",
+			{
+				Title: "PROXY - I'll proxy challenge requests to an HTTP server",
 				Value: "proxy",
 			},
-			{Title: "REDIRECTOR - I want to use acmetool's redirect-to-HTTPS functionality",
+			{
+				Title: "REDIRECTOR - I want to use acmetool's redirect-to-HTTPS functionality",
 				Value: "redirector",
 			},
-			{Title: "LISTEN - Listen on port 80 or 443 (only useful for development purposes)",
+			{
+				Title: "LISTEN - Listen on port 80 or 443 (only useful for development purposes)",
 				Value: "listen",
 			},
-			{Title: "STATELESS - I will configure my web server with my account key",
+			{
+				Title: "STATELESS - I will configure my web server with my account key",
 				Value: "stateless",
 			},
-			{Title: "HOOK - I will write scripts to provision challenges",
+			{
+				Title: "HOOK - I will write scripts to provision challenges",
 				Value: "hook",
 			},
 		},

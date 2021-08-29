@@ -3,13 +3,14 @@ package solver
 import (
 	"context"
 	"fmt"
+	"sync"
+	"time"
+
 	"github.com/hlandau/acmetool/responder"
 	"github.com/hlandau/acmetool/util"
 	denet "github.com/hlandau/goutils/net"
 	"github.com/hlandau/xlog"
 	"gopkg.in/hlandau/acmeapi.v2"
-	"sync"
-	"time"
 )
 
 var log, Log = xlog.New("acmetool.solver")
@@ -42,7 +43,6 @@ func (b *blacklist) Add(hostname, challengeType string) {
 // challenges to the extent possible, and creates orders again if necessary
 // after challenge failure, until success or unrecoverable failure.
 func Order(ctx context.Context, rc *acmeapi.RealmClient, acct *acmeapi.Account, orderTemplate *acmeapi.Order, csr []byte, ccfg *responder.ChallengeConfig) (*acmeapi.Order, error) {
-
 	// Make order.
 	// Progress the order. => result: Success | Retry | Fail
 
@@ -393,7 +393,7 @@ func orderCompleteChallenge(ctx context.Context, rc *acmeapi.RealmClient, acct *
 	defer r.Stop()
 
 	// RESPOND
-	err = rc.RespondToChallenge(ctx, acct, &oldCh, r.Validation()) //r.ValidationSigningKey()
+	err = rc.RespondToChallenge(ctx, acct, &oldCh, r.Validation()) // r.ValidationSigningKey()
 	if err != nil {
 		return
 	}

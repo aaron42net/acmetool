@@ -31,5 +31,7 @@ func Neuter() {
 	isNeutered = true
 }
 
-var isNeutered = false
-var hasTouchedSensitiveData = false
+var (
+	isNeutered              = false
+	hasTouchedSensitiveData = false
+)

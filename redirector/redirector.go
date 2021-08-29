@@ -5,17 +5,18 @@ package redirector
 import (
 	"errors"
 	"fmt"
-	deos "github.com/hlandau/goutils/os"
-	"github.com/hlandau/xlog"
-	"gopkg.in/hlandau/svcutils.v1/chroot"
-	"gopkg.in/hlandau/svcutils.v1/passwd"
-	"gopkg.in/tylerb/graceful.v1"
 	"html"
 	"net"
 	"net/http"
 	"os"
 	"sync/atomic"
 	"time"
+
+	deos "github.com/hlandau/goutils/os"
+	"github.com/hlandau/xlog"
+	"gopkg.in/hlandau/svcutils.v1/chroot"
+	"gopkg.in/hlandau/svcutils.v1/passwd"
+	"gopkg.in/tylerb/graceful.v1"
 )
 
 var log, Log = xlog.New("acme.redirector")
@@ -58,7 +59,7 @@ func New(cfg Config) (*Redirector, error) {
 	}
 
 	// Try and make the challenge path if it doesn't exist.
-	err := os.MkdirAll(r.cfg.ChallengePath, 0755)
+	err := os.MkdirAll(r.cfg.ChallengePath, 0o755)
 	if err != nil {
 		return nil, err
 	}
@@ -126,8 +127,8 @@ func enforceGID(gid, path string) error {
 		return err
 	}
 
-	dir.Chmod((fi.Mode() | 0070) & ^os.ModeType) // Ignore errors.
-	dir.Chown(curUID, newGID)                    // Ignore errors.
+	dir.Chmod((fi.Mode() | 0o070) & ^os.ModeType) // Ignore errors.
+	dir.Chown(curUID, newGID)                     // Ignore errors.
 	return nil
 }
 

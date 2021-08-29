@@ -22,7 +22,7 @@ func TestFDB(t *testing.T) {
   alpha 0604 0705
   alpha/foo  0640 0750
   `
-	err = ioutil.WriteFile(filepath.Join(dir, "Permissionsfile"), []byte(permissionsfile), 0644)
+	err = ioutil.WriteFile(filepath.Join(dir, "Permissionsfile"), []byte(permissionsfile), 0o644)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,10 +30,10 @@ func TestFDB(t *testing.T) {
 	db, err := Open(Config{
 		Path: dir,
 		Permissions: []Permission{
-			{Path: ".", FileMode: 0644, DirMode: 0755},
-			{Path: "alpha", FileMode: 0644, DirMode: 0755},
-			{Path: "beta", FileMode: 0600, DirMode: 0700},
-			{Path: "tmp", FileMode: 0600, DirMode: 0700},
+			{Path: ".", FileMode: 0o644, DirMode: 0o755},
+			{Path: "alpha", FileMode: 0o644, DirMode: 0o755},
+			{Path: "beta", FileMode: 0o600, DirMode: 0o700},
+			{Path: "tmp", FileMode: 0o600, DirMode: 0o700},
 		},
 		PermissionsPath: "Permissionsfile",
 	})
@@ -97,7 +97,7 @@ func TestFDB(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if fi.Mode() != 0640 {
+	if fi.Mode() != 0o640 {
 		t.Fatal("unexpected mode")
 	}
 
@@ -111,7 +111,7 @@ func TestFDB(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if fi.Mode() != 0604 {
+	if fi.Mode() != 0o604 {
 		t.Fatal("unexpected mode")
 	}
 

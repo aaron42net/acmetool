@@ -2,10 +2,11 @@ package solver
 
 import (
 	"fmt"
+	"net/mail"
+
 	"github.com/hlandau/acmetool/interaction"
 	"golang.org/x/net/context"
 	"gopkg.in/hlandau/acmeapi.v2"
-	"net/mail"
 )
 
 // Using the given client, account and interactor (or interaction.Auto if nil),
@@ -30,7 +31,7 @@ func AssistedRegistration(ctx context.Context, cl *acmeapi.RealmClient, acct *ac
 		return nil
 	}
 
-	// Check that the error that occured was a not found error.
+	// Check that the error that occurred was a not found error.
 	he, ok := err.(*acmeapi.HTTPError)
 	if !ok {
 		return err

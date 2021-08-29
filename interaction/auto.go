@@ -2,6 +2,7 @@ package interaction
 
 import (
 	"fmt"
+
 	"github.com/hlandau/xlog"
 )
 

@@ -4,13 +4,14 @@ package fdb
 
 import (
 	"fmt"
-	deos "github.com/hlandau/goutils/os"
-	"github.com/hlandau/xlog"
-	"gopkg.in/hlandau/svcutils.v1/passwd"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
+
+	deos "github.com/hlandau/goutils/os"
+	"github.com/hlandau/xlog"
+	"gopkg.in/hlandau/svcutils.v1/passwd"
 )
 
 var log, Log = xlog.New("fdb")
@@ -27,7 +28,7 @@ type DB struct {
 type Config struct {
 	Path            string
 	Permissions     []Permission
-	PermissionsPath string // If not "", allow permissions to be overriden from this file.
+	PermissionsPath string // If not "", allow permissions to be overridden from this file.
 }
 
 // Expresses the permission policy for a given path. The first match is used.
@@ -440,7 +441,7 @@ func (db *DB) ensurePath(path string) error {
 		return nil
 	}
 
-	mode := os.FileMode(0755)
+	mode := os.FileMode(0o755)
 	perm := db.longestMatching(path)
 	if perm != nil {
 		mode = perm.DirMode
@@ -769,7 +770,7 @@ func (c *Collection) WriteLink(name string, target Link) error {
 	if err == nil && existingTo == toRel {
 		return nil
 	}
-	
+
 	tmpName, err := tempSymlink(toRel, filepath.Join(c.db.path, "tmp"))
 	if err != nil {
 		return err

@@ -4,12 +4,13 @@ package hooks
 
 import (
 	"fmt"
-	deos "github.com/hlandau/goutils/os"
-	"github.com/hlandau/xlog"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strings"
+
+	deos "github.com/hlandau/goutils/os"
+	"github.com/hlandau/xlog"
 )
 
 // Log site.
@@ -166,7 +167,7 @@ func runParts(ctx *Context, stdinData []byte, args ...string) (anySucceeded bool
 		fi, err := os.Stat(directory)
 		if err == nil {
 			// Do not execute a world-writable directory.
-			if (fi.Mode() & 02) != 0 {
+			if (fi.Mode() & 0o2) != 0 {
 				return false, fmt.Errorf("refusing to execute hooks, directory is world-writable: %s", directory)
 			}
 
@@ -216,14 +217,14 @@ func runParts(ctx *Context, stdinData []byte, args ...string) (anySucceeded bool
 
 		// Yes, this is vulnerable to race conditions; it's just to stop people
 		// from shooting themselves in the foot.
-		if (mode & 02) != 0 {
+		if (mode & 0o2) != 0 {
 			log.Errorf("refusing to execute world-writable hook: %s", m)
 			continue
 		}
 
 		// This doesn't check which mode bit (user,group,world) is applicable to
 		// us but avoids cluttering the log for non-executable files.
-		if (mode & 0111) == 0 {
+		if (mode & 0o111) == 0 {
 			log.Debugf("cannot execute non-executable hook: %s", m)
 			continue
 		}

@@ -4,13 +4,14 @@ package cli
 
 import (
 	"fmt"
+	"io"
+	"os"
+
 	"github.com/hlandau/acmetool/interaction"
 	sddbus "github.com/hlandauf/go-systemd/dbus"
 	sdunit "github.com/hlandauf/go-systemd/unit"
 	"gopkg.in/hlandau/svcutils.v1/exepath"
 	"gopkg.in/hlandau/svcutils.v1/systemd" // coreos/go-systemd/util requires cgo
-	"io"
-	"os"
 )
 
 func promptSystemd() {
@@ -60,7 +61,7 @@ The service name will be acmetool-redirector.`,
 		return
 	}
 
-	f, err := os.OpenFile("/etc/systemd/system/acmetool-redirector.service", os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0644)
+	f, err := os.OpenFile("/etc/systemd/system/acmetool-redirector.service", os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0o644)
 	if err != nil {
 		log.Errore(err, "acmetool-redirector.service unit file already exists?")
 		return

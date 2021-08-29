@@ -3,13 +3,14 @@ package interaction
 import (
 	"bufio"
 	"fmt"
-	"github.com/hlandau/goutils/text"
-	"github.com/mitchellh/go-wordwrap"
-	"gopkg.in/cheggaaa/pb.v1"
 	"os"
 	"strconv"
 	"strings"
 	"sync"
+
+	"github.com/hlandau/goutils/text"
+	"github.com/mitchellh/go-wordwrap"
+	"gopkg.in/cheggaaa/pb.v1"
 )
 
 type stdioInteractor struct{}
@@ -83,7 +84,7 @@ A:
 		}
 	}
 
-	//bar.Update()
+	// bar.Update()
 	bar.Finish()
 	close(ss.closedChan)
 }
@@ -160,7 +161,6 @@ func stdioLineString(c *Challenge) (*Response, error) {
 }
 
 func stdioSelect(c *Challenge) (*Response, error) {
-
 	p := c.Prompt
 	if p == "" {
 		p = ">"

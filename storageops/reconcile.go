@@ -9,6 +9,12 @@ import (
 	"crypto/x509/pkix"
 	"encoding/asn1"
 	"fmt"
+	"net/http"
+	"path/filepath"
+	"sort"
+	"strings"
+	"time"
+
 	"github.com/hlandau/acmetool/hooks"
 	"github.com/hlandau/acmetool/responder"
 	"github.com/hlandau/acmetool/solver"
@@ -18,11 +24,6 @@ import (
 	"github.com/jmhodges/clock"
 	"gopkg.in/hlandau/acmeapi.v2"
 	"gopkg.in/hlandau/acmeapi.v2/acmeendpoints"
-	"net/http"
-	"path/filepath"
-	"sort"
-	"strings"
-	"time"
 )
 
 var log, Log = xlog.New("acmetool.storageops")
@@ -185,7 +186,7 @@ func (r *reconcile) disjoinTargets() (hostnameTargetMapping map[string]*storage.
 	// for anything currently, so we disable computation of it currently.
 	hostnameTargetMapping = map[string]*storage.Target{}
 	for _, tgt := range targets {
-		//tgt.Satisfy.ReducedNamesByLabel = nil
+		// tgt.Satisfy.ReducedNamesByLabel = nil
 		for _, name := range tgt.Satisfy.Names {
 			key := name
 			if tgt.Label != "" {
@@ -217,8 +218,8 @@ func (r *reconcile) Reconcile() error {
 		return err
 	}
 
-	//err = r.processPendingRevocations()
-	//log.Errore(err, "could not process pending revocations")
+	// err = r.processPendingRevocations()
+	// log.Errore(err, "could not process pending revocations")
 
 	err = r.processTargets()
 	log.Errore(err, "error while processing targets")

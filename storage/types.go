@@ -6,9 +6,10 @@ import (
 	"crypto/rsa"
 	"encoding/base32"
 	"fmt"
-	"github.com/satori/go.uuid"
-	"gopkg.in/hlandau/acmeapi.v2"
 	"strings"
+
+	uuid "github.com/satori/go.uuid"
+	"gopkg.in/hlandau/acmeapi.v2"
 )
 
 // Represents stored account data.
@@ -61,7 +62,7 @@ type TargetSatisfy struct {
 
 	// D. Reduced name set, after disjunction operation. Derived from Names for
 	// each label (or label "").
-	//ReducedNamesByLabel map[string][]string `yaml:"-"`
+	// ReducedNamesByLabel map[string][]string `yaml:"-"`
 
 	// N. Key configuration items which are required to satisfy a target.
 	Key TargetSatisfyKey `yaml:"key,omitempty"`
@@ -233,7 +234,7 @@ func (t *Target) CopyGeneric() *Target {
 
 func (t *Target) genericise() {
 	t.Satisfy.Names = nil
-	//t.Satisfy.ReducedNamesByLabel = nil
+	// t.Satisfy.ReducedNamesByLabel = nil
 	t.Request.Names = nil
 	t.LegacyNames = nil
 }

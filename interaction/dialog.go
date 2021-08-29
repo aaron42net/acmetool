@@ -231,8 +231,10 @@ func (dialogInteractor) Prompt(c *Challenge) (*Response, error) {
 	return res, nil
 }
 
-var dialogCommand = ""
-var dialogCommandType = ""
+var (
+	dialogCommand     = ""
+	dialogCommandType = ""
+)
 
 func findDialogCommand() (string, string) {
 	if dialogCommand != "" {

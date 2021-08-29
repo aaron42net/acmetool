@@ -498,22 +498,22 @@ func parseResponse(v interface{}) (*interaction.Response, error) {
 func cmdRevoke() {
 	certSpec := *revokeArg
 	f, _ := os.Open(certSpec)
-	//var fi os.FileInfo
+	// var fi os.FileInfo
 	if f != nil {
 		defer f.Close()
-		//var err error
-		//fi, err = f.Stat()
-		//log.Panice(err)
+		// var err error
+		// fi, err = f.Stat()
+		// log.Panice(err)
 	}
-	//u, _ := url.Parse(certSpec)
+	// u, _ := url.Parse(certSpec)
 
 	switch {
-	//case f != nil && !fi.IsDir(): // is a file path
+	// case f != nil && !fi.IsDir(): // is a file path
 
-	//case f != nil && fi.IsDir(): // is a directory path
+	// case f != nil && fi.IsDir(): // is a directory path
 	//  f, _ = os.Open(filepath.Join(certSpec, "cert"))
 
-	//case u != nil && u.IsAbs() && acmeapi.ValidURL(certSpec): // is an URL
+	// case u != nil && u.IsAbs() && acmeapi.ValidURL(certSpec): // is an URL
 
 	case storage.IsWellFormattedCertificateOrKeyID(certSpec):
 		// key or certificate ID

@@ -6,16 +6,17 @@ import (
 	"crypto"
 	"crypto/x509"
 	"fmt"
+	"io"
+	"io/ioutil"
+	"os"
+	"strings"
+
 	"github.com/hlandau/acmetool/fdb"
 	"github.com/hlandau/acmetool/util"
 	"github.com/hlandau/xlog"
 	"gopkg.in/hlandau/acmeapi.v2"
 	"gopkg.in/hlandau/acmeapi.v2/acmeutils"
 	"gopkg.in/yaml.v2"
-	"io"
-	"io/ioutil"
-	"os"
-	"strings"
 )
 
 var log, Log = xlog.New("acme.storage")
@@ -189,15 +190,15 @@ func init() {
 }
 
 var storePermissions = []fdb.Permission{
-	{Path: ".", DirMode: 0755, FileMode: 0644},
-	{Path: "accounts", DirMode: 0700, FileMode: 0600},
-	{Path: "desired", DirMode: 0755, FileMode: 0644},
-	{Path: "live", DirMode: 0755, FileMode: 0644},
-	{Path: "certs", DirMode: 0755, FileMode: 0644},
-	{Path: "certs/*/haproxy", DirMode: 0700, FileMode: 0600}, // hack for HAProxy
-	{Path: "keys", DirMode: 0700, FileMode: 0600},
-	{Path: "conf", DirMode: 0755, FileMode: 0644},
-	{Path: "tmp", DirMode: 0700, FileMode: 0600},
+	{Path: ".", DirMode: 0o755, FileMode: 0o644},
+	{Path: "accounts", DirMode: 0o700, FileMode: 0o600},
+	{Path: "desired", DirMode: 0o755, FileMode: 0o644},
+	{Path: "live", DirMode: 0o755, FileMode: 0o644},
+	{Path: "certs", DirMode: 0o755, FileMode: 0o644},
+	{Path: "certs/*/haproxy", DirMode: 0o700, FileMode: 0o600}, // hack for HAProxy
+	{Path: "keys", DirMode: 0o700, FileMode: 0o600},
+	{Path: "conf", DirMode: 0o755, FileMode: 0o644},
+	{Path: "tmp", DirMode: 0o700, FileMode: 0o600},
 }
 
 // Initialization and loading. {{{1

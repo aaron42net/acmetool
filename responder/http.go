@@ -6,10 +6,6 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
-	"github.com/hlandau/acmetool/responder/reshttp"
-	denet "github.com/hlandau/goutils/net"
-	deos "github.com/hlandau/goutils/os"
-	"gopkg.in/hlandau/acmeapi.v2/acmeutils"
 	"io/ioutil"
 	"net"
 	"net/http"
@@ -20,6 +16,11 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/hlandau/acmetool/responder/reshttp"
+	denet "github.com/hlandau/goutils/net"
+	deos "github.com/hlandau/goutils/os"
+	"gopkg.in/hlandau/acmeapi.v2/acmeutils"
 )
 
 // For testing use only. Determines the HTTP port which is listened on. This is
@@ -172,7 +173,7 @@ func webrootWriteChallenge(webroots map[string]struct{}, token string, ka []byte
 	log.Debugf("writing %d webroot challenge files", len(webroots))
 
 	for wr := range webroots {
-		os.MkdirAll(wr, 0755) // ignore errors
+		os.MkdirAll(wr, 0o755) // ignore errors
 		fn := filepath.Join(wr, token)
 		log.Debugf("writing webroot file %s", fn)
 
@@ -189,9 +190,9 @@ func webrootWriteChallenge(webroots map[string]struct{}, token string, ka []byte
 		var f *os.File
 		var err error
 		if strings.HasPrefix(wr, "/var/run/") {
-			f, err = deos.OpenFileNoSymlinks(fn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+			f, err = deos.OpenFileNoSymlinks(fn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 		} else {
-			f, err = os.OpenFile(fn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0644)
+			f, err = os.OpenFile(fn, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0o644)
 		}
 		if err != nil {
 			log.Infoe(err, "failed to open webroot file ", fn)

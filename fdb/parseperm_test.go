@@ -9,7 +9,7 @@ import (
 )
 
 func TestParsePerm(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		In    string
 		Out   []Permission
 		Erase map[string]struct{}
@@ -27,14 +27,14 @@ func TestParsePerm(t *testing.T) {
      x 0644 0755 root -
      y 0644 0755 - root
      `, []Permission{
-			{Path: "foo/bar", FileMode: 0644, DirMode: 0755},
-			{Path: "foo/*/baz", FileMode: 0640, DirMode: 0750},
-			{Path: "alpha", FileMode: 0644, DirMode: 0755, UID: "root", GID: "root"},
-			{Path: "beta", FileMode: 0644, DirMode: 0755, UID: "42", GID: "42"},
-			{Path: "gamma", FileMode: 0644, DirMode: 0755, UID: "$r", GID: "$r"},
-			{Path: "x", FileMode: 0644, DirMode: 0755, UID: "root", GID: ""},
-			{Path: "y", FileMode: 0644, DirMode: 0755, UID: "", GID: "root"},
-		}, map[string]struct{}{"delta": struct{}{}}},
+			{Path: "foo/bar", FileMode: 0o644, DirMode: 0o755},
+			{Path: "foo/*/baz", FileMode: 0o640, DirMode: 0o750},
+			{Path: "alpha", FileMode: 0o644, DirMode: 0o755, UID: "root", GID: "root"},
+			{Path: "beta", FileMode: 0o644, DirMode: 0o755, UID: "42", GID: "42"},
+			{Path: "gamma", FileMode: 0o644, DirMode: 0o755, UID: "$r", GID: "$r"},
+			{Path: "x", FileMode: 0o644, DirMode: 0o755, UID: "root", GID: ""},
+			{Path: "y", FileMode: 0o644, DirMode: 0o755, UID: "", GID: "root"},
+		}, map[string]struct{}{"delta": {}}},
 	}
 
 	for _, tst := range tests {

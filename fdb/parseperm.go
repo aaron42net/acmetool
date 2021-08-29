@@ -3,13 +3,14 @@ package fdb
 import (
 	"bufio"
 	"fmt"
-	"gopkg.in/hlandau/svcutils.v1/passwd"
 	"io"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"gopkg.in/hlandau/svcutils.v1/passwd"
 )
 
 var rePermissionLine = regexp.MustCompile(`^(?P<path>[^\s]+)\s+(?P<value>inherit|(?P<fileMode>[0-7]{3,4})\s+(?P<dirMode>[0-7]{3,4})(\s+(?P<uid>[^\s]+)\s+(?P<gid>[^\s]+))?)$`)

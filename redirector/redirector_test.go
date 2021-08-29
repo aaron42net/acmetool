@@ -1,12 +1,13 @@
 package redirector
 
 import (
-	denet "github.com/hlandau/goutils/net"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
 	"testing"
+
+	denet "github.com/hlandau/goutils/net"
 )
 
 func TestRedirector(t *testing.T) {
@@ -48,7 +49,7 @@ func TestRedirector(t *testing.T) {
 		t.Fatalf("wrong Location: %v", loc)
 	}
 
-	err = ioutil.WriteFile(filepath.Join(dir, "foo"), []byte("bar"), 0644)
+	err = ioutil.WriteFile(filepath.Join(dir, "foo"), []byte("bar"), 0o644)
 	if err != nil {
 		t.Fatal(err)
 	}

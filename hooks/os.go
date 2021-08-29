@@ -1,9 +1,10 @@
 package hooks
 
 import (
-	deos "github.com/hlandau/goutils/os"
 	"os"
 	"os/exec"
+
+	deos "github.com/hlandau/goutils/os"
 )
 
 func runningAsRoot() bool {

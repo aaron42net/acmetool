@@ -7,8 +7,9 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"fmt"
-	"github.com/hlandau/acmetool/storage"
 	"time"
+
+	"github.com/hlandau/acmetool/storage"
 )
 
 type targetSorter []*storage.Target

@@ -2,8 +2,9 @@ package storage
 
 import (
 	"crypto/elliptic"
-	"github.com/hlandau/acmetool/fdb"
 	"strings"
+
+	"github.com/hlandau/acmetool/fdb"
 )
 
 // Legacy Configuration

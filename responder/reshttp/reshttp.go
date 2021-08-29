@@ -3,13 +3,14 @@
 package reshttp
 
 import (
-	"github.com/hlandau/xlog"
-	"gopkg.in/tylerb/graceful.v1"
 	"net"
 	"net/http"
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/hlandau/xlog"
+	"gopkg.in/tylerb/graceful.v1"
 )
 
 var log, Log = xlog.New("acmetool.reshttp")
@@ -118,8 +119,10 @@ func (p *port) getClaim(filename string) (body []byte, notifyFunc func()) {
 	return pc.body, pc.notifyFunc
 }
 
-var mutex sync.Mutex
-var ports = map[string]*port{}
+var (
+	mutex sync.Mutex
+	ports = map[string]*port{}
+)
 
 func AcquirePort(bindAddr, filename string, body []byte, notifyFunc func()) (PortClaim, error) {
 	log.Debugf("acquire port %q %q", bindAddr, filename)
